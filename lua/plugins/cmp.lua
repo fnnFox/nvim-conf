@@ -39,7 +39,7 @@ cmp.setup({
 		}),
 	sources = cmp.config.sources({
 	  { name = 'nvim_lsp' },
-	  { name = 'vsnip' }, -- For vsnip users.
+	  -- { name = 'vsnip' }, -- For vsnip users.
 	  -- { name = 'luasnip' }, -- For luasnip users.
 	  -- { name = 'ultisnips' }, -- For ultisnips users.
 	  -- { name = 'snippy' }, -- For snippy users.
@@ -81,6 +81,6 @@ matching = { disallow_symbol_nonprefix_matching = false }
 -- Set up lspconfig.
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-require('lspconfig')['clangd'].setup {
+require('lspconfig')['ccls'].setup {
 capabilities = capabilities
 }

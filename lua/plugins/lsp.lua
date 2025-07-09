@@ -1,7 +1,5 @@
 local lspconfig = require('lspconfig')
-
-lspconfig.clangd.setup {}
-lspconfig.lua_ls.setup {}
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -10,31 +8,45 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<leader>ld', vim.diagnostic.setloclist)
 
--- Use LspAttach autocommand to only map the following keys
--- after the language server attaches to the current buffer
-vim.api.nvim_create_autocmd('LspAttach', {
-    group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-    callback = function(ev)
-        -- Enable completion triggered by <c-x><c-o>
-        vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+local on_attach = function(client, bufnr)
+	vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
+	local opts = { buffer = bufnr, noremap=true, silent=true }
+	vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+	vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+	vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+	vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+	vim.keymap.set('n', '<leader>lr', vim.lsp.buf.rename, opts)
+	vim.keymap.set({'n','v'}, '<leader>la', vim.lsp.buf.code_action, opts)
+	vim.keymap.set('n', '<leader>lf', function() vim.lsp.buf.format { async = true } end, opts)
+end
 
-        local opts = {buffer = ev.buf}
-        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-        vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-        -- vim.keymap
-        --     .set('n', '<Leader>sa', vim.lsp.buf.add_workspace_folder, opts)
-        -- vim.keymap.set('n', '<Leader>sr', vim.lsp.buf.remove_workspace_folder,
-        --                opts)
-        -- vim.keymap.set('n', '<Leader>sl', function()
-        --     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-        -- end, opts)
-        -- vim.keymap.set('n', '<Leader>D', vim.lsp.buf.type_definition, opts)
-        vim.keymap.set('n', '<Leader>lr', vim.lsp.buf.rename, opts)
-        vim.keymap.set({'n', 'v'}, '<Leader>la', vim.lsp.buf.code_action, opts)
-        -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-        vim.keymap.set('n', '<Leader>lf',
-                       function() vim.lsp.buf.format {async = true} end, opts)
-    end
+lspconfig.clangd.setup {
+	on_attach = on_attach,
+	capabilities = capabilities,
+	cmd = { "clangd", "--background-index" },
+}
+
+lspconfig.lua_ls.setup {
+	on_attach = on_attach,
+	capabilities = capabilities,
+}
+
+lspconfig.intelephense.setup {
+	on_attach = on_attach,
+	capabilities = capabilities,
+	settings = {
+		intelephense = {
+			environment = {
+				includePaths = { "vendor" },
+			},
+		},
+	},
+}
+
+vim.diagnostic.config({
+	virtual_text = true,
+	signs = true,
+	underline = true,
+	update_in_insert = false,
+	severity_sort = true,
 })

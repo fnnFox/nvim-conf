@@ -1,17 +1,21 @@
---  Base?  --
+--   Base?	--
+--   moved	--
 
-require('core.options')
 
---  Core   --
+--   Core	--
 
 require('core.plugins')
 require('core.mappings')
 require('core.colors')
 
--- Plugins --
+-- Plugins	--
 
 require('plugins.neotree')
 require('plugins.treesitter')
 require('plugins.lsp')
 require('plugins.cmp')
 require('plugins.autopairs')
+
+-- base. --
+require('core.options')
+
