@@ -20,15 +20,33 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set('n', '<leader>lf', function() vim.lsp.buf.format { async = true } end, opts)
 end
 
-lspconfig.clangd.setup {
+-- lspconfig.clangd.setup {
+-- 	on_attach = on_attach,
+-- 	capabilities = capabilities,
+-- 	cmd = { 'clangd', '--background-index', '--compile-commands-dir=build' },
+-- }
+
+lspconfig.ccls.setup {
 	on_attach = on_attach,
 	capabilities = capabilities,
-	cmd = { "clangd", "--background-index" },
 }
 
 lspconfig.lua_ls.setup {
 	on_attach = on_attach,
 	capabilities = capabilities,
+	settings = {
+		Lua = {
+			diagnostics = {
+				globals = { 'vim' },
+			},
+			workspace = {
+				checkThirdParty = false,
+			},
+			telemetry = {
+				enable = false,
+			},
+		},
+	},
 }
 
 lspconfig.intelephense.setup {
@@ -37,7 +55,7 @@ lspconfig.intelephense.setup {
 	settings = {
 		intelephense = {
 			environment = {
-				includePaths = { "vendor" },
+				includePaths = { 'vendor' },
 			},
 		},
 	},
