@@ -13,7 +13,6 @@ return {
 			automatic_enable = false,
 		})
 
-		local lspconfig = require('lspconfig')
 		local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 		vim.keymap.set('n', '<leader>lD', vim.diagnostic.open_float)
@@ -33,15 +32,14 @@ return {
 			vim.keymap.set('n', '<leader>lf', function() vim.lsp.buf.format { async = true } end, opts)
 		end
 
-		local default = {
+		vim.lsp.config('*', {
 			on_attach = on_attach,
 			capabilities = capabilities,
-		}
+		})
 
-		lspconfig.clangd.setup(vim.tbl_deep_extend('force', default, {
-		}))
+		vim.lsp.config('clangd', {})
 
-		lspconfig.lua_ls.setup(vim.tbl_deep_extend('force', default, {
+		vim.lsp.config('lua_ls', {
 			settings = {
 				Lua = {
 					diagnostics = {
@@ -49,12 +47,13 @@ return {
 					}
 				},
 			},
-		}))
+		})
 
-		lspconfig.asm_lsp.setup({
+		vim.lsp.config('asm_lsp', {
 			filetypes = { "asm", "s", "S" },
 		})
 
+		vim.lsp.enable({ 'clangd', 'lua_ls', 'asm_lsp' })
 
 		vim.diagnostic.config({
 			virtual_text = true,
