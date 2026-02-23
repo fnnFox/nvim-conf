@@ -9,7 +9,7 @@ return {
 
 	config = function()
 		require('mason-lspconfig').setup({
-			ensure_installed = { 'clangd', 'lua_ls', 'intelephense' },
+			ensure_installed = { 'clangd', 'lua_ls' },
 			automatic_enable = false,
 		})
 
@@ -46,16 +46,6 @@ return {
 				Lua = {
 					diagnostics = {
 						globals = { 'vim' }
-					}
-				},
-			},
-		}))
-
-		lspconfig.intelephense.setup(vim.tbl_deep_extend('force', default, {
-			settings = {
-				intelephense = {
-					environment = {
-						includePaths = { 'vendor' }
 					}
 				},
 			},
