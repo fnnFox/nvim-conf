@@ -53,7 +53,17 @@ return {
 			filetypes = { "asm", "s", "S" },
 		})
 
-		vim.lsp.enable({ 'clangd', 'lua_ls', 'asm_lsp' })
+		vim.lsp.config('bashls', {
+			filetypes = { "sh", "bash" }
+		})
+
+		vim.lsp.config('tinymist', {
+			settings = {
+				formatterMode = "disable",
+			},
+		})
+
+		vim.lsp.enable({ 'clangd', 'lua_ls', 'asm_lsp', 'bashls', 'tinymist' })
 
 		vim.diagnostic.config({
 			virtual_text = true,
