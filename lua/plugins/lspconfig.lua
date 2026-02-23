@@ -39,14 +39,6 @@ return {
 		}
 
 		lspconfig.clangd.setup(vim.tbl_deep_extend('force', default, {
-			cmd = {
-				-- 'clangd',
-				"/home/fnnfox/.espressif/tools/esp-clang/esp-19.1.2_20250312/esp-clang/bin/clangd",
-				"--header-insertion=never",
-				"--query-driver=**",
-				"--log=error",
-				"--compile-commands-dir=build",
-			},
 		}))
 
 		lspconfig.lua_ls.setup(vim.tbl_deep_extend('force', default, {
