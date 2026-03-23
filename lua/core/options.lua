@@ -27,3 +27,5 @@ vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.opt.foldenable = true
 vim.o.foldlevelstart = 99
 
+vim.cmd [[colorscheme retrobox]]
+
