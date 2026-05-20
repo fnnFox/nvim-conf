@@ -9,7 +9,7 @@ return {
 
 	config = function()
 		require('mason-lspconfig').setup({
-			ensure_installed = { 'clangd', 'lua_ls' },
+			ensure_installed = { 'clangd', 'lua_ls', 'bashls' },
 			automatic_enable = false,
 		})
 
