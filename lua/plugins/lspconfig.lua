@@ -63,7 +63,12 @@ return {
 			},
 		})
 
-		vim.lsp.enable({ 'clangd', 'lua_ls', 'asm_lsp', 'bashls', 'tinymist' })
+		vim.lsp.config('qmlls', {
+			filetypes = { "qml" },
+			cmd = { "/usr/lib/qt6/bin/qmlls" }
+		})
+
+		vim.lsp.enable({ 'clangd', 'lua_ls', 'asm_lsp', 'bashls', 'tinymist', 'qmlls' })
 
 		vim.diagnostic.config({
 			virtual_text = true,
