@@ -28,4 +28,5 @@ vim.opt.foldenable = true
 vim.o.foldlevelstart = 99
 
 vim.cmd [[colorscheme retrobox]]
+vim.opt.guicursor = "n-v-c-i:block"
 
