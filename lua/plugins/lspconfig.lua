@@ -15,17 +15,18 @@ return {
 
 		local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-		vim.keymap.set('n', '<leader>lD', vim.diagnostic.open_float)
+		vim.keymap.set('n', '<leader>ld', vim.diagnostic.open_float)
 		vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 		vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-		vim.keymap.set('n', '<leader>ld', vim.diagnostic.setloclist)
+		vim.keymap.set('n', '<leader>lD', vim.diagnostic.setloclist)
 
 		local on_attach = function(client, bufnr)
 			vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
 			local opts = { buffer = bufnr, noremap=true, silent=true }
+			vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
 			vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-			vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
 			vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+			vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
 			vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
 			vim.keymap.set('n', '<leader>lr', vim.lsp.buf.rename, opts)
 			vim.keymap.set({'n','v'}, '<leader>la', vim.lsp.buf.code_action, opts)
